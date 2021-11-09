@@ -5,7 +5,7 @@
 const numToPush = 5;
 const randomNumbers = [];
 
-let seconds = 5;
+let seconds = 30;
 let strikes = 0;
 
 const numbers = document.getElementById('numbers');

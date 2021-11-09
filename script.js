@@ -5,9 +5,10 @@
 const numToPush = 5;
 const randomNumbers = [];
 
-let seconds = 30;
+let seconds = 5;
+let strikes = 0;
 
-const cpuNum = document.getElementById('cpuNum');
+const numbers = document.getElementById('numbers');
 const timer = document.getElementById('countDown');
 
 pushNumbers();
@@ -26,13 +27,56 @@ const countDown = setInterval(() => {
      //stoppo il count down
      clearInterval(countDown);
      //azzero il display
-     cpuNum.innerHTML = '';
+     numbers.innerHTML = '';
      //count down finito
      timer.innerHTML = `Count Down finito`;
-     
+
+     userNum();
+     printResult();
   }
 }, 1000);
 
+function userNum(){
+  for (let i = 0; i < numToPush; i++) {
+    let number;
+
+    do {
+       number = parseInt(prompt('Inserisci un numero da 1 a 100'));
+       if (number < 1 || number > 100 || number === NaN) {
+          alert('Attenzione!!Inserisci un numero corretto!')
+       }
+    } while (number < 1 || number > 100);
+    
+    console.log('hai scelto', number);
+    rightNum(number);
+ }
+}
+
+function rightNum(n) {
+   
+  if (randomNumbers.includes(n)) {
+     strikes++;
+  }
+}
+
+function printResult() {
+  if (!strikes) {
+
+     numbers.innerHTML = `
+        <h1>Non hai ricordato nessun numero</h1>
+     `;
+  } else if (strikes === randomNumbers.length) {
+     
+     numbers.innerHTML = `
+        <h1>Hai ricordato tutti e ${strikes} i numeri. Congratulazioni!</h1>
+     `;
+  } else {
+
+     numbers.innerHTML = `
+        <h1>Hai ricordato ${strikes} numeri</h1>
+     `;
+  }
+}
 
 function pushNumbers() {
       
@@ -56,7 +100,7 @@ function printNum() {
 
   randomNumbers.forEach(number => {
      
-     cpuNum.innerHTML += `<h2>${number}</h2>`;
+     numbers.innerHTML += `<h2>${number}</h2>`;
   });
 }
 
